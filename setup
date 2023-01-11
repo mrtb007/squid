@@ -19,11 +19,11 @@ printf "========================================================================
 printf "=========================================================================\n"
 squid_user=mrtb007
 squid_password=q3.-jrW645!Q+89f
-yum -y install squid
-htpasswd -b -c /etc/squid/passwd $squid_user $squid_password
+yum -y install squid httpd-tools
 chkconfig squid on
-wget https://raw.githubusercontent.com/mrtb007/squid/main/squid.conf
+htpasswd -b -c /etc/squid/passwd $squid_user $squid_password
 iptables -I INPUT -p tcp --dport 8668 -j ACCEPT
+wget https://raw.githubusercontent.com/mrtb007/squid/main/squid.conf
 /sbin/service iptables save
 rm -r -f /etc/squid/squid.conf
 \cp -uf /root/squid.conf /etc/squid/
@@ -36,9 +36,9 @@ printf "Hoan tat qua trinh cai dat... \n"
 printf "=========================================================================\n"
 printf "Tu bay gio ban co the su dung Proxyserver voi thong tin sau: \n"
 printf "IP Proxyserver:  $svip \n"
-printf "Cong ket noi (Port) là : 6868 \n"
+printf "Cong ket noi (Port) là : 8668 \n"
 printf "=========================================================================\n"
-printf "Hay truy cap HostingAZ.VN de xem cac bai huong dan ve VPS/Server\n"
+printf "
 printf "=========================================================================\n"
 printf "Chuc ban thanh cong. \n"
 sleep 15
