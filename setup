@@ -1,0 +1,41 @@
+is#!/bin/bash
+if [ "$(rpm -q --qf "%{VERSION}" $(rpm -q --whatprovides redhat-release))" == "7" ]; then 
+clear
+echo "========================================================================="
+echo "Trinh setup khong ho tro centos 7, ban hay cai centos 6 va thu lai"
+killall setup
+fi
+if [ -f "/proc/user_beancounters" ]; then
+svip=$(ifconfig venet0:0 | grep 'inet addr:' | awk -F'inet addr:' '{ print $2}' | awk '{ print $1}')
+else
+svip=$(ifconfig eth0 | grep 'inet addr:' | awk -F'inet addr:' '{ print $2}' | awk '{ print $1}')
+fi
+clear
+printf "=========================================================================\n"
+printf "Chuan bi qua trinh cai dat Proxy Server cho VPS cua ban.. \n"
+printf "=========================================================================\n"
+printf "Ban cho khoang 3 phut de viec cai dat hoan tat\n"
+printf "=========================================================================\n"
+printf "=========================================================================\n"
+yum -y install squid
+chkconfig squid on
+wget http://hostingaz.vn/script/proxyserver/squid.conf
+rm -r -f /etc/squid/squid.conf
+\cp -uf /root/squid.conf /etc/squid/
+rm -r -f /root/squid.conf
+rm -r -f /root/setup
+service squid restart
+clear
+printf "=========================================================================\n"
+printf "Hoan tat qua trinh cai dat... \n"
+printf "=========================================================================\n"
+printf "Tu bay gio ban co the su dung Proxyserver voi thong tin sau: \n"
+printf "IP Proxyserver:  $svip \n"
+printf "Cong ket noi (Port) là : 6868 \n"
+printf "=========================================================================\n"
+printf "Hay truy cap HostingAZ.VN de xem cac bai huong dan ve VPS/Server\n"
+printf "=========================================================================\n"
+printf "Chuc ban thanh cong. \n"
+sleep 15
+exit
+
